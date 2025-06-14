@@ -1,0 +1,26 @@
+🚀 Starte Flask-basiertes DA-KI Dashboard...
+📊 URL: http://10.1.1.110:8054
+🎯 Buttons sind GARANTIERT sichtbar und funktionsfähig!
+ * Serving Flask app 'flask_dashboard'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (::)
+ * Running on http://[::1]:8054
+ * Running on http://[2a00:1f:2442:404::105]:8054
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 414-312-795
+::ffff:127.0.0.1 - - [13/Jun/2025 21:02:51] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:03:10] "POST /api/test-button HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:07:34] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:07:43] "GET / HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:08:02] "POST /api/test-button HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:08:02] "POST /api/test-button HTTP/1.1" 200 -
+::ffff:127.0.0.1 - - [13/Jun/2025 21:08:02] "POST /api/test-button HTTP/1.1" 200 -
+ * Detected change in '/home/mdoehler/data-web-app/frontend/dashboard_top10.py', reloading
+🚀 Starte Flask-basiertes DA-KI Dashboard...
+📊 URL: http://10.1.1.110:8054
+🎯 Buttons sind GARANTIERT sichtbar und funktionsfähig!
+ * Restarting with stat
+/home/mdoehler/data-web-app/venv/bin/python: can't open file '/home/mdoehler/data-web-app/frontend/flask_dashboard.py': [Errno 2] No such file or directory

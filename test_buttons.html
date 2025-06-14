@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NoCache Meta Tags um Browser-Caching zu verhindern -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow">
+    <title>DA-KI Test - Live-Monitoring Buttons</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .table { width: 100%; border-collapse: collapse; background: white; }
+        .table th, .table td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        .table th { background-color: #e74c3c; color: white; }
+        .btn { padding: 8px 12px; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 10px; }
+        .btn:hover { background-color: #2980b9; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 DA-KI Live-Monitoring Integration Test</h1>
+        
+        <div id="status" class="status info">
+            📊 Teste Verbindung zu API Server...
+        </div>
+        
+        <h2>📋 Detaillierte Wachstumsprognose mit Live-Monitoring Integration</h2>
+        
+        <table class="table" id="stockTable">
+            <thead>
+                <tr>
+                    <th>Rang</th>
+                    <th>Aktie</th>
+                    <th>Branche</th>
+                    <th>Kurs</th>
+                    <th>KI-Score</th>
+                    <th>30T Prognose</th>
+                    <th>Aktion</th>
+                </tr>
+            </thead>
+            <tbody id="stockTableBody">
+                <tr><td colspan="7">Lade Daten...</td></tr>
+            </tbody>
+        </table>
+        
+        <h2>🎯 Live-Monitoring Positionen</h2>
+        <div id="positions" class="status info">Lade Positionen...</div>
+    </div>
+
+    <script>
+        // Test API Verbindung und lade Daten
+        async function loadStocks() {
+            try {
+                const response = await fetch('http://localhost:8003/api/wachstumsprognose/top10');
+                const data = await response.json();
+                const stocks = data.top_10_wachstums_aktien || [];
+                
+                if (stocks.length > 0) {
+                    document.getElementById('status').innerHTML = 
+                        `✅ API verbunden - ${stocks.length} Aktien geladen`;
+                    document.getElementById('status').className = 'status success';
+                    
+                    renderStocks(stocks);
+                } else {
+                    document.getElementById('status').innerHTML = 
+                        '⚠️ API verbunden, aber keine Aktien verfügbar';
+                }
+            } catch (error) {
+                document.getElementById('status').innerHTML = 
+                    `❌ API Fehler: ${error.message}`;
+            }
+        }
+        
+        function renderStocks(stocks) {
+            const tbody = document.getElementById('stockTableBody');
+            tbody.innerHTML = '';
+            
+            stocks.slice(0, 5).forEach((stock, index) => {
+                const prognose = stock.prognose_30_tage || {};
+                const score = stock.wachstums_score || 0;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>#${index + 1}</td>
+                    <td>
+                        <strong>${stock.symbol}</strong><br>
+                        <small style="color: #7f8c8d">${(stock.name || 'N/A').substring(0, 20)}...</small>
+                    </td>
+                    <td>${(stock.branche || 'N/A').substring(0, 15)}</td>
+                    <td>€${stock.current_price || 0}</td>
+                    <td>
+                        <div style="font-weight: bold">${score.toFixed(1)}/100</div>
+                        <div style="font-size: 10px; color: ${score >= 80 ? '#27ae60' : score >= 70 ? '#f39c12' : '#e74c3c'}">
+                            ${score >= 80 ? 'STARK' : score >= 70 ? 'MITTEL' : 'SCHWACH'}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="font-weight: bold">€${(prognose.prognostizierter_preis || 0).toFixed(2)}</div>
+                        <div style="font-size: 11px; color: ${(prognose.erwartete_rendite_prozent || 0) > 0 ? '#27ae60' : '#e74c3c'}">
+                            ${(prognose.erwartete_rendite_prozent || 0) >= 0 ? '+' : ''}${(prognose.erwartete_rendite_prozent || 0).toFixed(1)}%
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn" onclick="addToMonitoring('${stock.symbol}', '${stock.name}')">
+                            📊 Zu Live-Monitoring
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        async function loadPositions() {
+            try {
+                const response = await fetch('http://localhost:8003/api/dashboard/live-monitoring-positions');
+                const data = await response.json();
+                const positions = data.live_monitoring_positionen || [];
+                const freePositions = data.freie_positionen || [];
+                
+                document.getElementById('positions').innerHTML = 
+                    `🟢 ${freePositions.length} freie Positionen | 🔴 ${10 - freePositions.length} belegte Positionen`;
+                document.getElementById('positions').className = 'status success';
+                
+            } catch (error) {
+                document.getElementById('positions').innerHTML = 
+                    `❌ Positions-API Fehler: ${error.message}`;
+            }
+        }
+        
+        async function addToMonitoring(symbol, name) {
+            try {
+                // Hole verfügbare Positionen
+                const posResponse = await fetch('http://localhost:8003/api/dashboard/live-monitoring-positions');
+                const posData = await posResponse.json();
+                const freePositions = posData.freie_positionen || [];
+                
+                if (freePositions.length === 0) {
+                    alert('Keine freien Positionen verfügbar!');
+                    return;
+                }
+                
+                // Wähle erste freie Position
+                const position = freePositions[0];
+                const confirmed = confirm(`${symbol} zu Position ${position} hinzufügen?`);
+                
+                if (confirmed) {
+                    const addResponse = await fetch(
+                        `http://localhost:8003/api/dashboard/add-to-live-monitoring?symbol=${symbol}&name=${encodeURIComponent(name)}&position=${position}&replace_existing=true`,
+                        { method: 'POST' }
+                    );
+                    
+                    if (addResponse.ok) {
+                        alert(`✅ ${symbol} wurde zu Position ${position} hinzugefügt!`);
+                        loadPositions(); // Aktualisiere Positions-Anzeige
+                    } else {
+                        const error = await addResponse.text();
+                        alert(`❌ Fehler: ${error}`);
+                    }
+                }
+            } catch (error) {
+                alert(`❌ Fehler: ${error.message}`);
+            }
+        }
+        
+        // Lade Daten beim Start
+        loadStocks();
+        loadPositions();
+        
+        // Auto-refresh alle 30 Sekunden
+        setInterval(() => {
+            loadStocks();
+            loadPositions();
+        }, 30000);
+    </script>
+</body>
+</html>

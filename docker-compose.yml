@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  search-api:
+    build: .
+    container_name: aktienanalyse-search-api
+    ports:
+      - "8002:8002"
+    command: python api/google_search_api.py
+    restart: unless-stopped
+    networks:
+      - aktienanalyse-network
+
+  main-api:
+    build: .
+    container_name: aktienanalyse-main-api
+    ports:
+      - "8003:8003"
+    volumes:
+      - ./database:/app/database
+    command: python api/api_top10_final.py
+    depends_on:
+      - search-api
+    restart: unless-stopped
+    networks:
+      - aktienanalyse-network
+
+  dashboard:
+    build: .
+    container_name: aktienanalyse-dashboard
+    ports:
+      - "8054:8054"
+    command: python frontend/dashboard_top10.py
+    depends_on:
+      - main-api
+      - search-api
+    restart: unless-stopped
+    networks:
+      - aktienanalyse-network
+
+networks:
+  aktienanalyse-network:
+    driver: bridge
+
+volumes:
+  database-data:

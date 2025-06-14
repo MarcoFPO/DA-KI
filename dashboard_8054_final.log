@@ -1,0 +1,13 @@
+🚀 Starte Flask-basiertes DA-KI Dashboard...
+📊 URL: http://10.1.1.110:8054
+🎯 Buttons sind GARANTIERT sichtbar und funktionsfähig!
+ * Serving Flask app 'dashboard_top10'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:8054
+ * Running on http://10.1.1.105:8054
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 414-312-795
