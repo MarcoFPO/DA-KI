@@ -116,25 +116,38 @@ live_monitoring_positions  # Benutzer-Positionen
 historical_stock_data  # Historische Kursdaten
 ```
 
-## 📈 Roadmap
+## 📈 Strategische Roadmap
 
-### Phase 1 (✅ Abgeschlossen)
-- [x] Core KI-Algorithmus implementiert
-- [x] Dashboard mit 3 Hauptbereichen
-- [x] Enhanced Button-Funktionalität
-- [x] Position-Selection Modal
+### 🎯 Konzeptstruktur
+- **[Konzept-Übersicht](docs/CONCEPT_OVERVIEW.md)** - Strategische Gesamtausrichtung
+- **[Business Konzept](docs/BUSINESS_CONCEPT.md)** - Geschäftsmodell & Marktanalyse  
+- **[Technical Konzept](docs/TECHNICAL_CONCEPT.md)** - Architektur & Implementation
+- **[Implementation Roadmap](docs/IMPLEMENTATION_ROADMAP.md)** - Strukturierte Umsetzung
 
-### Phase 2 (🚧 In Arbeit)
-- [ ] Yahoo Finance API Integration
-- [ ] AsyncIO Parallel Processing
-- [ ] Redis Caching System
+### Phase 1: Foundation (✅ Größtenteils Abgeschlossen)
+- [x] Core KI-Algorithmus mit 5-Faktor Scoring
+- [x] Enhanced Live-Monitoring mit Position-Selection Modal
+- [x] Vollständiges GitHub Projektmanagement Setup
+- [x] Professionelle Dokumentations-Suite
+
+### Phase 2: Scale & Performance (🚧 In Arbeit)
+- [ ] Real-time Yahoo Finance API Integration
+- [ ] AsyncIO Parallel Processing (467 Aktien <5s)
+- [ ] Redis Multi-Level Caching System
 - [ ] WebSocket Real-time Updates
+- [ ] PostgreSQL Migration & Optimization
 
-### Phase 3 (📋 Geplant)
-- [ ] Advanced Portfolio-Steuerung
-- [ ] Multi-User Support
-- [ ] Docker Containerization
-- [ ] Cloud Deployment
+### Phase 3: Growth & Expansion (📋 Q4 2025)
+- [ ] DACH-Region Expansion (AT/CH Märkte)
+- [ ] Advanced Portfolio-Optimierung
+- [ ] Mobile App (React Native)
+- [ ] B2B API Platform & White-Label Solutions
+
+### Phase 4: Enterprise & Global (📅 2026)
+- [ ] International Markets (UK/US)
+- [ ] Enterprise-Grade Features
+- [ ] AI Innovation (GPT Integration)
+- [ ] Series A Fundraising
 
 ## 🤝 Contributing
 
