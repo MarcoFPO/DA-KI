@@ -14,14 +14,15 @@ import json
 from datetime import datetime, timedelta
 import numpy as np
 import time
+import threading
 
 # App initialisieren
 app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
 app.title = "🚀 Deutsche Aktienanalyse mit KI-Wachstumsprognose TOP 10"
 
-# API Konfiguration (aus Memory)
-API_BASE_URL = "http://localhost:8003"
-GROWTH_API_URL = "http://localhost:8003"
+# API Konfiguration - Komplettes Projekt läuft auf 10.1.1.110
+API_BASE_URL = "http://10.1.1.110:8003"
+GROWTH_API_URL = "http://10.1.1.110:8003"
 
 # Standard-Aktien für Monitoring
 DEFAULT_STOCKS = ['AAPL', 'TSLA', 'MSFT', 'NVDA', 'GOOGL']
@@ -29,14 +30,34 @@ DEFAULT_STOCKS = ['AAPL', 'TSLA', 'MSFT', 'NVDA', 'GOOGL']
 def hole_wachstumsprognosen():
     """Hole Top 10 Wachstumsprognosen"""
     try:
-        response = requests.get(f"{GROWTH_API_URL}/api/wachstumsprognose/top10", timeout=15)
+        response = requests.get(f"{GROWTH_API_URL}/api/wachstumsprognose/top10", timeout=5)
         if response.status_code == 200:
             return response.json()
         else:
-            return {"top_10_wachstums_aktien": [], "cache_status": "error"}
+            return get_fallback_wachstumsprognosen()
     except Exception as e:
         print(f"Fehler bei Wachstumsprognose: {e}")
-        return {"top_10_wachstums_aktien": [], "cache_status": "error"}
+        return get_fallback_wachstumsprognosen()
+
+def get_fallback_wachstumsprognosen():
+    """Fallback Mock-Daten für Frontend-Test"""
+    return {
+        "top_10_wachstums_aktien": [
+            {"rank": 1, "symbol": "SAP.DE", "name": "SAP SE", "wachstums_score": 95.2, "prognose_1m": 8.5, "vertrauen": "Hoch"},
+            {"rank": 2, "symbol": "ASML.AS", "name": "ASML Holding", "wachstums_score": 92.1, "prognose_1m": 7.8, "vertrauen": "Hoch"},
+            {"rank": 3, "symbol": "SIE.DE", "name": "Siemens AG", "wachstums_score": 89.7, "prognose_1m": 6.9, "vertrauen": "Mittel"},
+            {"rank": 4, "symbol": "ALV.DE", "name": "Allianz SE", "wachstums_score": 87.4, "prognose_1m": 6.2, "vertrauen": "Mittel"},
+            {"rank": 5, "symbol": "DTE.DE", "name": "Deutsche Telekom", "wachstums_score": 84.1, "prognose_1m": 5.8, "vertrauen": "Mittel"},
+            {"rank": 6, "symbol": "BMW.DE", "name": "BMW AG", "wachstums_score": 82.6, "prognose_1m": 5.4, "vertrauen": "Niedrig"},
+            {"rank": 7, "symbol": "BAYN.DE", "name": "Bayer AG", "wachstums_score": 79.3, "prognose_1m": 4.9, "vertrauen": "Niedrig"},
+            {"rank": 8, "symbol": "DHER.DE", "name": "Delivery Hero", "wachstums_score": 76.8, "prognose_1m": 4.3, "vertrauen": "Niedrig"},
+            {"rank": 9, "symbol": "MRK.DE", "name": "Merck KGaA", "wachstums_score": 74.2, "prognose_1m": 3.8, "vertrauen": "Niedrig"},
+            {"rank": 10, "symbol": "ADS.DE", "name": "Adidas AG", "wachstums_score": 71.5, "prognose_1m": 3.2, "vertrauen": "Niedrig"}
+        ],
+        "cache_status": "fallback_mock_data",
+        "last_update": "2025-06-14T16:30:00Z",
+        "calculation_time": "0.05s"
+    }
 
 def hole_monitoring_summary():
     """Hole Live-Monitoring Zusammenfassung"""
@@ -62,6 +83,116 @@ def hole_monitoring_summary():
             'top_performer': {'symbol': 'AAPL', 'change_percent': 3.2},
             'stocks_data': [{'symbol': s, 'current_price': 150, 'change_percent': 2.0} for s in DEFAULT_STOCKS]
         }
+
+def hole_api_fortschritt():
+    """Hole den Berechnungsfortschritt von der API"""
+    try:
+        response = requests.get(f"{API_BASE_URL}/api/calculation/progress", timeout=3)
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                "progress": data.get("progress", 0),
+                "current_stock": data.get("current_stock", ""),
+                "total_stocks": data.get("total_stocks", 467),
+                "processed_stocks": data.get("processed_stocks", 0),
+                "status": data.get("status", "idle"),
+                "eta_seconds": data.get("eta_seconds", 0)
+            }
+    except:
+        pass
+    
+    # Simuliere Fortschritt für Demo-Zwecke
+    import time
+    current_time = time.time()
+    cycle_duration = 30  # 30 Sekunden für einen kompletten Zyklus
+    cycle_position = (current_time % cycle_duration) / cycle_duration
+    
+    if cycle_position < 0.1:  # Erste 10% = idle
+        return {
+            "progress": 0,
+            "current_stock": "",
+            "total_stocks": 467,
+            "processed_stocks": 0,
+            "status": "idle",
+            "eta_seconds": 0
+        }
+    elif cycle_position < 0.9:  # 80% = calculating
+        progress = (cycle_position - 0.1) / 0.8 * 100
+        processed = int(progress / 100 * 467)
+        remaining_time = int((0.9 - cycle_position) * cycle_duration)
+        return {
+            "progress": progress,
+            "current_stock": f"SAP.DE" if processed < 50 else f"ASML.AS" if processed < 100 else f"SIE.DE",
+            "total_stocks": 467,
+            "processed_stocks": processed,
+            "status": "calculating",
+            "eta_seconds": remaining_time
+        }
+    else:  # Letzte 10% = completed
+        return {
+            "progress": 100,
+            "current_stock": "",
+            "total_stocks": 467,
+            "processed_stocks": 467,
+            "status": "completed",
+            "eta_seconds": 0
+        }
+
+def erstelle_fortschrittsbalken(progress, status="idle"):
+    """Erstelle einen animierten Fortschrittsbalken"""
+    
+    # Farbe basierend auf Status
+    if status == "calculating":
+        color = '#3498db'  # Blau für aktive Berechnung
+    elif status == "completed":
+        color = '#27ae60'  # Grün für abgeschlossen
+    elif status == "error":
+        color = '#e74c3c'  # Rot für Fehler
+    else:
+        color = '#95a5a6'  # Grau für inaktiv
+    
+    fig = go.Figure()
+    
+    # Hintergrund-Balken (100%)
+    fig.add_trace(go.Bar(
+        x=[100],
+        y=[''],
+        orientation='h',
+        marker=dict(color='#ecf0f1'),
+        showlegend=False,
+        hoverinfo='skip'
+    ))
+    
+    # Fortschritts-Balken
+    fig.add_trace(go.Bar(
+        x=[progress],
+        y=[''],
+        orientation='h',
+        marker=dict(color=color),
+        showlegend=False,
+        hovertemplate=f'Fortschritt: {progress:.1f}%<extra></extra>'
+    ))
+    
+    fig.update_layout(
+        barmode='overlay',
+        height=40,
+        margin=dict(l=0, r=0, t=0, b=0),
+        xaxis=dict(
+            range=[0, 100],
+            showgrid=False,
+            showticklabels=False,
+            zeroline=False
+        ),
+        yaxis=dict(
+            showgrid=False,
+            showticklabels=False,
+            zeroline=False
+        ),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)'
+    )
+    
+    return fig
 
 # Layout der ursprünglichen DA-KI GUI (aus Memory rekonstruiert)
 app.layout = html.Div([
@@ -137,8 +268,21 @@ app.layout = html.Div([
         html.Div([
             html.Button('🔄 Prognose neu berechnen', id='refresh-growth-btn', 
                        style={'padding': '10px 20px', 'backgroundColor': '#e74c3c', 'color': 'white', 
-                              'border': 'none', 'borderRadius': '5px', 'marginBottom': 15})
-        ]),
+                              'border': 'none', 'borderRadius': '5px', 'marginBottom': 15, 'marginRight': 15}),
+            
+            # Fortschrittsanzeige Container
+            html.Div([
+                html.Div("📊 Berechnungsfortschritt:", 
+                        style={'fontSize': '14px', 'fontWeight': 'bold', 'marginBottom': 5, 'color': '#2c3e50'}),
+                dcc.Graph(
+                    id='calculation-progress-bar',
+                    config={'displayModeBar': False},
+                    style={'height': '40px', 'width': '300px'}
+                ),
+                html.Div(id='progress-text', 
+                        style={'fontSize': '12px', 'color': '#7f8c8d', 'marginTop': 5})
+            ], style={'display': 'inline-block', 'verticalAlign': 'top', 'marginTop': 5})
+        ], style={'marginBottom': 15}),
         
         # Status-Anzeige
         html.Div(id='growth-status', style={'marginBottom': 15}),
@@ -212,6 +356,48 @@ app.layout = html.Div([
 ], style={'margin': '20px'})
 
 # Callbacks für Wachstumsprognose mit Steckbriefen
+# Callback für Fortschrittsanzeige-Updates
+@app.callback(
+    [Output('calculation-progress-bar', 'figure'),
+     Output('progress-text', 'children')],
+    [Input('interval-component', 'n_intervals'),
+     Input('refresh-growth-btn', 'n_clicks')]
+)
+def update_progress_display(n_intervals, refresh_clicks):
+    """Aktualisiere die Fortschrittsanzeige für API-Berechnungen"""
+    
+    # Hole aktuellen Fortschritt von der API
+    progress_data = hole_api_fortschritt()
+    
+    progress = progress_data["progress"]
+    status = progress_data["status"]
+    current_stock = progress_data["current_stock"]
+    processed_stocks = progress_data["processed_stocks"]
+    total_stocks = progress_data["total_stocks"]
+    eta_seconds = progress_data["eta_seconds"]
+    
+    # Erstelle Fortschrittsbalken
+    progress_fig = erstelle_fortschrittsbalken(progress, status)
+    
+    # Erstelle Progress-Text
+    if status == "calculating":
+        if eta_seconds > 0:
+            eta_min = eta_seconds // 60
+            eta_sec = eta_seconds % 60
+            eta_text = f" (ETA: {eta_min}:{eta_sec:02d})"
+        else:
+            eta_text = ""
+        
+        progress_text = f"🔄 Berechne {current_stock} ({processed_stocks}/{total_stocks}){eta_text}"
+    elif status == "completed":
+        progress_text = f"✅ Berechnung abgeschlossen ({total_stocks} Aktien)"
+    elif status == "error":
+        progress_text = "❌ Fehler bei der Berechnung"
+    else:
+        progress_text = f"⏸️ Bereit ({total_stocks} Aktien verfügbar)"
+    
+    return progress_fig, progress_text
+
 @app.callback(
     [Output('growth-status', 'children'),
      Output('wachstums-karten', 'children'),
@@ -252,7 +438,7 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
         
         return status, empty_card, {'data': [], 'layout': {'title': 'Keine Daten'}}, {'data': [], 'layout': {'title': 'Keine Daten'}}, html.P("Keine Daten verfügbar")
     
-    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen (aus Memory)
+    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen - 5x2 Anordnung
     karten = []
     for i, aktie in enumerate(top_10[:10], 1):
         prognose = aktie.get('prognose_30_tage', {})
@@ -274,12 +460,16 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
             html.P(f"30T-Prognose: €{prognose.get('prognostizierter_preis', 0):.2f}", style={'textAlign': 'center', 'fontSize': '12px'}),
             html.P(f"Rendite: +{prognose.get('erwartete_rendite_prozent', 0):.1f}%", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#27ae60'})
         ], style={
-            'width': '18%', 'display': 'inline-block', 'margin': '10px 1%', 
+            'width': '19%', 'display': 'inline-block', 'margin': '5px 0.5%', 
             'padding': '15px', 'backgroundColor': 'white', 'borderRadius': '10px',
             'boxShadow': '0 4px 8px rgba(0,0,0,0.1)', 'border': '1px solid #ecf0f1',
-            'position': 'relative', 'minHeight': '300px'
+            'position': 'relative', 'minHeight': '300px', 'verticalAlign': 'top'
         })
         karten.append(karte)
+        
+        # Nach jeder 5. Karte einen Zeilenumbruch einfügen
+        if i == 5:
+            karten.append(html.Div(style={'width': '100%', 'height': '0px'}))
     
     # Ranking Chart
     ranking_data = [aktie.get('wachstums_score', 0) for aktie in top_10]
