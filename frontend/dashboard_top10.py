@@ -438,10 +438,10 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
         
         return status, empty_card, {'data': [], 'layout': {'title': 'Keine Daten'}}, {'data': [], 'layout': {'title': 'Keine Daten'}}, html.P("Keine Daten verfügbar")
     
-    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen - echte 5x2 Anordnung
+    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen - 5x2 Layout (5 Zeilen, 2 Spalten)
     
-    # Erste Reihe (Karten 1-5)
-    erste_reihe = []
+    # Linke Spalte (Karten 1-5)
+    linke_spalte = []
     for i, aktie in enumerate(top_10[:5], 1):
         prognose = aktie.get('prognose_30_tage', {})
         
@@ -462,15 +462,15 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
             html.P(f"30T-Prognose: €{prognose.get('prognostizierter_preis', 0):.2f}", style={'textAlign': 'center', 'fontSize': '12px'}),
             html.P(f"Rendite: +{prognose.get('erwartete_rendite_prozent', 0):.1f}%", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#27ae60'})
         ], style={
-            'width': '19%', 'display': 'inline-block', 'margin': '5px 0.5%', 
+            'width': '100%', 'margin': '10px 0', 
             'padding': '15px', 'backgroundColor': 'white', 'borderRadius': '10px',
             'boxShadow': '0 4px 8px rgba(0,0,0,0.1)', 'border': '1px solid #ecf0f1',
-            'position': 'relative', 'minHeight': '300px', 'verticalAlign': 'top'
+            'position': 'relative', 'minHeight': '300px'
         })
-        erste_reihe.append(karte)
+        linke_spalte.append(karte)
     
-    # Zweite Reihe (Karten 6-10)
-    zweite_reihe = []
+    # Rechte Spalte (Karten 6-10)
+    rechte_spalte = []
     for i, aktie in enumerate(top_10[5:10], 6):
         prognose = aktie.get('prognose_30_tage', {})
         
@@ -491,18 +491,18 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
             html.P(f"30T-Prognose: €{prognose.get('prognostizierter_preis', 0):.2f}", style={'textAlign': 'center', 'fontSize': '12px'}),
             html.P(f"Rendite: +{prognose.get('erwartete_rendite_prozent', 0):.1f}%", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#27ae60'})
         ], style={
-            'width': '19%', 'display': 'inline-block', 'margin': '5px 0.5%', 
+            'width': '100%', 'margin': '10px 0', 
             'padding': '15px', 'backgroundColor': 'white', 'borderRadius': '10px',
             'boxShadow': '0 4px 8px rgba(0,0,0,0.1)', 'border': '1px solid #ecf0f1',
-            'position': 'relative', 'minHeight': '300px', 'verticalAlign': 'top'
+            'position': 'relative', 'minHeight': '300px'
         })
-        zweite_reihe.append(karte)
+        rechte_spalte.append(karte)
     
-    # Container für 5x2 Layout
-    karten = [
-        html.Div(erste_reihe, style={'width': '100%', 'marginBottom': '10px'}),
-        html.Div(zweite_reihe, style={'width': '100%'})
-    ]
+    # Container für 5x2 Layout (5 Zeilen, 2 Spalten)
+    karten = html.Div([
+        html.Div(linke_spalte, style={'width': '48%', 'display': 'inline-block', 'verticalAlign': 'top', 'marginRight': '2%'}),
+        html.Div(rechte_spalte, style={'width': '48%', 'display': 'inline-block', 'verticalAlign': 'top', 'marginLeft': '2%'})
+    ], style={'width': '100%'})
     
     # Ranking Chart
     ranking_data = [aktie.get('wachstums_score', 0) for aktie in top_10]
