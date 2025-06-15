@@ -20,11 +20,17 @@ DA-KI ist eine moderne Fintech-Anwendung, die Künstliche Intelligenz nutzt, um 
 - **🔄 API-Integration**: RESTful API mit FastAPI
 - **💾 Datenpersistenz**: SQLite-Datenbank mit historischen Daten
 
-## 🏗️ Architektur
+## 🏗️ Modulare Architektur
 
 ```
 DA-KI/
-├── 📁 frontend/          # Dash Web-Interface
+├── 📁 frontend/          # Modulares Web-Interface (Vollständig isoliert)
+│   ├── dashboard_orchestrator.py      # Hauptkoordinator
+│   ├── frontend_layout_module.py      # Layout-Komponenten
+│   ├── frontend_tabelle_module.py     # Tabellen mit Action-Buttons
+│   ├── frontend_callback_module.py    # Event-Management
+│   ├── ki_wachstumsprognose_module.py # KI-Algorithmen (isoliert)
+│   └── live_monitoring_module.py      # Portfolio-Management (isoliert)
 ├── 📁 api/              # FastAPI Backend
 ├── 📁 services/         # Core Business Logic
 ├── 📁 database/         # SQLite Datenbank
@@ -32,15 +38,22 @@ DA-KI/
 └── 📁 tests/           # Test Suite
 ```
 
-### 🧩 Teilprojekte
+### 🧩 Teilprojekte (Modulare Architektur)
 
 | Komponente | Beschreibung | Status |
 |------------|-------------|---------|
 | **CORE** | Berechnungs-Engine & KI-Algorithmen | ✅ Aktiv |
-| **FRONTEND** | User Interface & Dashboard | ✅ Aktiv |
-| **KI-WACHSTUMSPROGNOSE** | Intelligente Analysealgorithmen | ✅ Implementiert |
-| **LIVE-MONITORING** | Echtzeit-Datenverarbeitung | 🚧 Enhanced |
+| **FRONTEND** | **Vollständig modulare UI-Architektur** | ✅ **Modular** |
+| **KI-WACHSTUMSPROGNOSE** | Isoliertes Modul mit definierten Schnittstellen | ✅ **Isoliert** |
+| **LIVE-MONITORING** | Isoliertes Portfolio-Management Modul | ✅ **Isoliert** |
 | **DEPO-STEUERUNG** | Portfolio-Management | 📋 Geplant |
+
+### 🎯 **Neue Modulare Features**
+- **🔗 Dependency Injection**: Cross-Module Kommunikation
+- **🛡️ Fehler-Isolation**: Module beeinträchtigen sich nicht
+- **🧩 Interface-Driven**: Definierte Schnittstellen zwischen Modulen
+- **⚡ Orchestrator-Pattern**: Zentrale Koordination aller Module
+- **📋 Action-Button Integration**: Vollständig funktionale Tabellen-Actions
 
 ## 🚀 Quick Start
 
@@ -70,8 +83,8 @@ python3 frontend/dashboard_top10.py
 
 ### 🌐 URLs
 
-- **Dashboard**: http://localhost:8054
-- **API Dokumentation**: http://localhost:8003/docs
+- **Dashboard**: http://10.1.1.110:8054
+- **API Dokumentation**: http://10.1.1.110:8003/docs
 - **Live Demo**: [Coming Soon]
 
 ## 📊 Features im Detail
