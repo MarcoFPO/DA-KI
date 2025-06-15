@@ -4,16 +4,16 @@
 
 Die DA-KI API ist eine moderne RESTful API, die mit FastAPI entwickelt wurde und umfassende Funktionalitäten für Aktienanalyse, KI-Wachstumsprognosen und Live-Portfolio-Monitoring bietet.
 
-**Base URL**: `http://localhost:8003`  
+**Base URL**: `http://10.1.1.110:8003`  
 **API Version**: v2.0  
 **Format**: JSON  
 **Authentication**: Bearer Token (geplant)
 
 ## 🔗 Quick Links
 
-- **Interactive API Docs**: http://localhost:8003/docs (Swagger UI)
-- **Alternative Docs**: http://localhost:8003/redoc (ReDoc)
-- **OpenAPI Schema**: http://localhost:8003/openapi.json
+- **Interactive API Docs**: http://10.1.1.110:8003/docs (Swagger UI)
+- **Alternative Docs**: http://10.1.1.110:8003/redoc (ReDoc)
+- **OpenAPI Schema**: http://10.1.1.110:8003/openapi.json
 
 ## 📊 API Endpoints Übersicht
 
@@ -416,13 +416,13 @@ grant_type=authorization_code&code=...&client_id=...&client_secret=...
 
 **1. Wachstumsprognose abrufen:**
 ```bash
-curl -X GET "http://localhost:8003/api/wachstumsprognose/top10" \
+curl -X GET "http://10.1.1.110:8003/api/wachstumsprognose/top10" \
   -H "Accept: application/json"
 ```
 
 **2. Position hinzufügen:**
 ```bash
-curl -X POST "http://localhost:8003/api/live-monitoring/add" \
+curl -X POST "http://10.1.1.110:8003/api/live-monitoring/add" \
   -H "Content-Type: application/json" \
   -d '{
     "symbol": "NVDA",
@@ -433,7 +433,7 @@ curl -X POST "http://localhost:8003/api/live-monitoring/add" \
 
 **3. Portfolio-Status prüfen:**
 ```bash
-curl -X GET "http://localhost:8003/api/monitoring/summary" \
+curl -X GET "http://10.1.1.110:8003/api/monitoring/summary" \
   -H "Accept: application/json"
 ```
 
@@ -445,7 +445,7 @@ curl -X GET "http://localhost:8003/api/monitoring/summary" \
 
 ```javascript
 // WebSocket Connection
-const ws = new WebSocket('ws://localhost:8003/ws/live-monitoring');
+const ws = new WebSocket('ws://10.1.1.110:8003/ws/live-monitoring');
 
 ws.onmessage = function(event) {
     const data = JSON.parse(event.data);
@@ -496,18 +496,18 @@ API-Version: 2.0
 
 ```bash
 # Health Check
-curl http://localhost:8003/health
+curl http://10.1.1.110:8003/health
 
 # Get Top 10 Wachstumsaktien
-curl http://localhost:8003/api/wachstumsprognose/top10
+curl http://10.1.1.110:8003/api/wachstumsprognose/top10
 
 # Add Position
-curl -X POST http://localhost:8003/api/live-monitoring/add \
+curl -X POST http://10.1.1.110:8003/api/live-monitoring/add \
   -H "Content-Type: application/json" \
   -d '{"symbol":"AAPL","shares":10,"investment":1500}'
 
 # Get Portfolio Summary
-curl http://localhost:8003/api/monitoring/summary
+curl http://10.1.1.110:8003/api/monitoring/summary
 ```
 
 ### Automated Testing
@@ -517,7 +517,7 @@ import requests
 import pytest
 
 class TestDAKIAPI:
-    base_url = "http://localhost:8003"
+    base_url = "http://10.1.1.110:8003"
     
     def test_health_endpoint(self):
         response = requests.get(f"{self.base_url}/health")
@@ -575,6 +575,6 @@ class TestDAKIAPI:
 *Entwickelt mit [Claude Code](https://claude.ai/code) - Moderne KI-gestützte Softwareentwicklung*
 
 **Nützliche Links:**
-- [Interactive API Docs](http://localhost:8003/docs)
+- [Interactive API Docs](http://10.1.1.110:8003/docs)
 - [GitHub Repository](https://github.com/MarcoFPO/DA-KI)
 - [Architektur-Dokumentation](./ARCHITECTURE.md)

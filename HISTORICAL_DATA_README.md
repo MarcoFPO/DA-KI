@@ -138,7 +138,7 @@ Liste aller überwachten Aktien
 #### `POST /api/monitored-stocks`
 Füge neue Aktie zur Überwachung hinzu
 ```bash
-curl -X POST "http://localhost:8003/api/monitored-stocks" \
+curl -X POST "http://10.1.1.110:8003/api/monitored-stocks" \
   -d "symbol=TSLA&name=Tesla Inc.&monitoring_interval=300"
 ```
 
@@ -250,25 +250,25 @@ Das Dash-Dashboard kann die neuen historischen Daten nutzen:
 ### Live-Monitoring starten
 ```bash
 # Starte Live-Monitoring für Tesla
-curl http://localhost:8003/api/live-monitoring/start/TSLA
+curl http://10.1.1.110:8003/api/live-monitoring/start/TSLA
 
 # Prüfe Intraday-Daten nach 30 Minuten
-curl http://localhost:8003/api/intraday/TSLA?hours=1
+curl http://10.1.1.110:8003/api/intraday/TSLA?hours=1
 ```
 
 ### Portfolio-Analyse
 ```bash
 # Hole 30-Tage historische Daten für Tech-Portfolio
-curl "http://localhost:8003/api/portfolio-historical?symbols=AAPL,MSFT,NVDA,GOOGL&days=30"
+curl "http://10.1.1.110:8003/api/portfolio-historical?symbols=AAPL,MSFT,NVDA,GOOGL&days=30"
 
 # Analysiere Statistiken
-curl http://localhost:8003/api/statistics/AAPL
+curl http://10.1.1.110:8003/api/statistics/AAPL
 ```
 
 ### Datenbereinigung
 ```bash
 # Bereinige Daten älter als 60 Tage
-curl -X POST "http://localhost:8003/api/cleanup-data" \
+curl -X POST "http://10.1.1.110:8003/api/cleanup-data" \
   -d "keep_days=60&keep_intraday_days=5"
 ```
 

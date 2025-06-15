@@ -46,8 +46,8 @@ python3 api/api_top10_final.py
 python3 frontend/dashboard_top10.py
 
 # URLs
-# Dashboard: http://localhost:8054
-# API Docs:  http://localhost:8003/docs
+# Dashboard: http://10.1.1.110:8054
+# API Docs:  http://10.1.1.110:8003/docs
 ```
 
 ## 🏗️ Projekt-Struktur

@@ -5,8 +5,8 @@
 | Component | Status | Version | URL |
 |-----------|---------|---------|-----|
 | **GitHub Repository** | ✅ Active | v2.0 | https://github.com/MarcoFPO/DA-KI |
-| **Dashboard** | ✅ Running | Enhanced | http://localhost:8054 |
-| **API** | ✅ Running | v2.0 | http://localhost:8003 |
+| **Dashboard** | ✅ Running | Enhanced | http://10.1.1.110:8054 |
+| **API** | ✅ Running | v2.0 | http://10.1.1.110:8003 |
 | **Documentation** | ✅ Complete | v2.0 | /docs/ |
 
 ## 🎯 Teilprojekte Status
@@ -107,12 +107,12 @@ Remote: https://github.com/MarcoFPO/DA-KI.git
 Last Commit: Enhanced Live-Monitoring Button Integration Complete
 
 # Running Services
-API Server: http://localhost:8003 (FastAPI)
-Dashboard: http://localhost:8054 (Dash)
+API Server: http://10.1.1.110:8003 (FastAPI)
+Dashboard: http://10.1.1.110:8054 (Dash)
 Database: SQLite aktienanalyse_de.db
 
 # Documentation
-API Docs: http://localhost:8003/docs
+API Docs: http://10.1.1.110:8003/docs
 Architecture: /docs/ARCHITECTURE.md
 Contributing: /CONTRIBUTING.md
 ```

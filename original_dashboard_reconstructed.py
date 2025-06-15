@@ -20,8 +20,8 @@ app = dash.Dash(__name__, external_stylesheets=['https://codepen.io/chriddyp/pen
 app.title = "🚀 Deutsche Aktienanalyse mit KI-Wachstumsprognose TOP 10"
 
 # API Konfiguration (aus Memory)
-API_BASE_URL = "http://localhost:8003"
-GROWTH_API_URL = "http://localhost:8003"
+API_BASE_URL = "http://10.1.1.110:8003"
+GROWTH_API_URL = "http://10.1.1.110:8003"
 
 # Standard-Aktien für Monitoring
 DEFAULT_STOCKS = ['AAPL', 'TSLA', 'MSFT', 'NVDA', 'GOOGL']
@@ -551,4 +551,4 @@ if __name__ == '__main__':
     print("🚀 Starte rekonstruierte DA-KI Dash GUI...")
     print("📊 URL: http://10.1.1.110:8054")
     print("🎯 Ursprüngliche GUI mit allen Features wiederhergestellt!")
-    app.run(debug=False, host='0.0.0.0', port=8054)
+    app.run(debug=False, host='10.1.1.110', port=8054)

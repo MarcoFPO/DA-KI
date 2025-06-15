@@ -32,11 +32,11 @@ echo ""
 echo "✅ Services mit noCache Headers gestartet!"
 echo ""
 echo "📊 API Server:"
-echo "   URL: http://localhost:8003"
+echo "   URL: http://10.1.1.110:8003"
 echo "   Log: tail -f api_nocache.log"
 echo ""
 echo "🖥️  Dashboard:"
-echo "   URL: http://localhost:8054"
+echo "   URL: http://10.1.1.110:8054"
 echo "   Log: tail -f dashboard_nocache.log"
 echo ""
 echo "🧪 Testseite:"
@@ -47,14 +47,14 @@ echo ""
 echo "🧪 Teste Services..."
 
 # Test API
-if curl -s http://localhost:8003/ > /dev/null 2>&1; then
+if curl -s http://10.1.1.110:8003/ > /dev/null 2>&1; then
     echo "✅ API Server läuft"
 else
     echo "❌ API Server nicht erreichbar"
 fi
 
 # Test Dashboard
-if curl -s http://localhost:8054/ > /dev/null 2>&1; then
+if curl -s http://10.1.1.110:8054/ > /dev/null 2>&1; then
     echo "✅ Dashboard läuft"
 else
     echo "❌ Dashboard nicht erreichbar"
@@ -69,4 +69,4 @@ echo "   ✅ Cache-Control: no-cache, no-store, must-revalidate"
 echo "   ✅ Pragma: no-cache"
 echo "   ✅ Expires: 0"
 echo ""
-echo "🔄 Öffnen Sie jetzt das Dashboard: http://localhost:8054"
+echo "🔄 Öffnen Sie jetzt das Dashboard: http://10.1.1.110:8054"

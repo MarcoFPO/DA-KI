@@ -25,7 +25,7 @@ def add_no_cache_headers(response):
 def hole_wachstumsprognosen():
     """Hole Wachstumsprognosen mit kurzer Timeout"""
     try:
-        response = requests.get("http://localhost:8003/api/wachstumsprognose/top10", timeout=3)
+        response = requests.get("http://10.1.1.110:8003/api/wachstumsprognose/top10", timeout=3)
         if response.status_code == 200:
             return response.json()
         else:

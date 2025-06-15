@@ -139,9 +139,12 @@ class ScoreComponents:
 ## 🖥️ TEILPROJEKT 2: FRONTEND (User Interface & Interactions)
 
 ### 🎯 **Zweck & Verantwortlichkeiten**
-**"Benutzeroberfläche und alle User-Interaktionen"**
+**"Darstellung der Daten vom Backend und Interaktion mit dem Anwender"**
 
-Das FRONTEND-Teilprojekt ist verantwortlich für die komplette Benutzeroberfläche, User Experience und alle visuellen Komponenten der Anwendung.
+Das FRONTEND-Teilprojekt ist zuständig für:
+- **Darstellung der Daten** vom Backend in benutzerfreundlicher Form
+- **Interaktion mit dem Anwender** durch intuitive Bedienelemente
+- **Keine Business Logic** - nur Präsentation und User Interface
 
 ### 📁 **Dateistruktur & Komponenten**
 ```
@@ -172,45 +175,49 @@ frontend/
 
 ### 🔧 **Kernfunktionalitäten**
 
-#### 1. Dashboard-Komponenten
+#### 1. Daten-Darstellung (Data Presentation)
 ```python
-# Dashboard Component Structure
-class DashboardManager:
-    """Zentrale Dashboard-Verwaltung"""
+# Data Presentation Components
+class DataPresentation:
+    """Darstellung von Backend-Daten"""
     
-    def render_growth_section(self) -> html.Div:
-        """KI-Wachstumsprognose Sektion"""
+    def render_stock_data(self, stock_data: Dict) -> html.Div:
+        """Zeigt Aktiendaten vom Backend an"""
         pass
     
-    def render_monitoring_section(self) -> html.Div:
-        """Live-Monitoring Sektion"""
+    def render_portfolio_metrics(self, metrics: Dict) -> html.Div:
+        """Zeigt Portfolio-Kennzahlen an"""
         pass
     
-    def render_portfolio_section(self) -> html.Div:
-        """Portfolio-Simulation Sektion"""
+    def render_live_prices(self, price_data: Dict) -> html.Div:
+        """Zeigt Live-Preise vom Backend an"""
         pass
     
-    def handle_user_interactions(self, inputs: Dict) -> Dict:
-        """User Input Handling"""
+    def format_financial_data(self, data: Dict) -> str:
+        """Formatiert Finanzdaten für Anzeige"""
         pass
 ```
 
-#### 2. Interaktive Komponenten
+#### 2. Anwender-Interaktion (User Interaction)
 ```python
-# Interactive UI Components
-class InteractiveComponents:
-    """Wiederverwendbare UI-Komponenten"""
+# User Interaction Components
+class UserInteraction:
+    """Anwender-Interaktion und Input-Handling"""
     
-    def create_position_modal(self, stock_data: Dict) -> html.Div:
-        """Position-Auswahl Modal ✅"""
+    def handle_button_clicks(self, button_id: str, n_clicks: int):
+        """Behandelt Button-Klicks und sendet Requests an Backend"""
         pass
     
-    def create_stock_card(self, stock: Dict) -> dbc.Card:
-        """Aktien-Karte mit Details"""
+    def handle_form_submission(self, form_data: Dict):
+        """Behandelt Formular-Eingaben und Validierung"""
         pass
     
-    def create_portfolio_chart(self, portfolio: Dict) -> dcc.Graph:
-        """Portfolio-Visualisierung"""
+    def handle_modal_interactions(self, modal_inputs: Dict):
+        """Behandelt Modal-Dialog Interaktionen ✅"""
+        pass
+    
+    def send_api_request(self, endpoint: str, data: Dict) -> Dict:
+        """Sendet Requests an Backend und empfängt Antworten"""
         pass
 ```
 
@@ -256,12 +263,18 @@ THEME_CONFIG = {
 
 ### 🔗 **Schnittstellen zu anderen Teilprojekten**
 
-| Teilprojekt | Interface Typ | Implementierung |
-|-------------|---------------|----------------|
-| **KI-WACHSTUMSPROGNOSE** | Callback Functions | `@app.callback` für Top 10 Display |
-| **LIVE-MONITORING** | Real-time Updates | WebSocket Integration |
-| **DEPO-STEUERUNG** | Interactive Forms | Portfolio Input Forms |
-| **API (Backend)** | HTTP Requests | `requests` Library |
+**Frontend = Reine Präsentationsschicht**
+
+| Backend-Teilprojekt | Datenfluss | Frontend-Aufgabe |
+|---------------------|------------|------------------|
+| **KI-WACHSTUMSPROGNOSE** | Backend → Frontend | Empfängt Scores & zeigt sie an |
+| **LIVE-MONITORING** | Backend ↔ Frontend | Empfängt Updates & sendet Position-Requests |
+| **DEPO-STEUERUNG** | Backend ↔ Frontend | Empfängt Portfolio-Daten & sendet User-Input |
+| **CORE** | Keine direkte Verbindung | Über andere Backend-Teilprojekte |
+
+**Klare Trennung:**
+- **Frontend**: Nur Darstellung + User Input
+- **Backend**: Alle Business Logic + Datenverarbeitung
 
 ### ✅ **Aktueller Status & Deliverables**
 - [x] **Basis-Dashboard implementiert** - 3 Hauptsektionen

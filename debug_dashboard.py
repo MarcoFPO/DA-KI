@@ -24,7 +24,7 @@ def add_no_cache_headers(response):
 def hole_wachstumsprognosen():
     """Hole Top 10 Wachstumsprognosen"""
     try:
-        response = requests.get("http://localhost:8003/api/wachstumsprognose/top10", timeout=10)
+        response = requests.get("http://10.1.1.110:8003/api/wachstumsprognose/top10", timeout=10)
         if response.status_code == 200:
             return response.json()
         else:
@@ -184,6 +184,6 @@ def handle_button_click(n_clicks_list):
 
 if __name__ == '__main__':
     print("🔧 Starte Debug Dashboard auf Port 8055...")
-    print("📊 URL: http://localhost:8055")
+    print("📊 URL: http://10.1.1.110:8055")
     print("🎯 Teste die Live-Monitoring Buttons!")
-    app.run(debug=True, host='0.0.0.0', port=8055)
+    app.run(debug=True, host='10.1.1.110', port=8055)

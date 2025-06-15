@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class WachstumsPredictor:
-    def __init__(self, api_base_url="http://localhost:8002"):
+    def __init__(self, api_base_url="http://10.1.1.110:8002"):
         self.api_base_url = api_base_url
         
         # Erweiterte globale Aktien-Liste (800+ Unternehmen mit Nischenbereichen und jungen Wachstumsaktien)

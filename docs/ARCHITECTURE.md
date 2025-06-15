@@ -442,7 +442,7 @@ graph TB
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8054"],
+    allow_origins=["http://10.1.1.110:8054"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

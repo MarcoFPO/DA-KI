@@ -109,10 +109,10 @@ def main():
     
     print("\n🌐 Beispiel-Aufrufe:")
     print("-" * 50)
-    print("curl http://localhost:8003/api/historical/AAPL?days=30")
-    print("curl http://localhost:8003/api/intraday/TSLA?hours=24")
-    print("curl http://localhost:8003/api/monitored-stocks")
-    print("curl http://localhost:8003/api/statistics/NVDA")
+    print("curl http://10.1.1.110:8003/api/historical/AAPL?days=30")
+    print("curl http://10.1.1.110:8003/api/intraday/TSLA?hours=24")
+    print("curl http://10.1.1.110:8003/api/monitored-stocks")
+    print("curl http://10.1.1.110:8003/api/statistics/NVDA")
     
     print("\n🚀 Das DA-KI Historical Stock Data System ist bereit!")
 

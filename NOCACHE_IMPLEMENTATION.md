@@ -54,7 +54,7 @@ async def add_no_cache_headers(request, call_next):
 
 ### **Hauptdashboard:**
 ```
-http://localhost:8054
+http://10.1.1.110:8054
 ```
 - NoCache Headers aktiv
 - Alle neuen Live-Monitoring Features verfügbar

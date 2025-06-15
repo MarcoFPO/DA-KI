@@ -26,7 +26,7 @@ def create_layout():
     
     # Versuche API-Daten zu laden
     try:
-        response = requests.get("http://localhost:8003/api/wachstumsprognose/top10", timeout=2)
+        response = requests.get("http://10.1.1.110:8003/api/wachstumsprognose/top10", timeout=2)
         if response.status_code == 200:
             data = response.json()
             aktien = data.get('top_10_wachstums_aktien', [])[:5]  # Nur erste 5

@@ -70,4 +70,4 @@ async def get_stock_info(symbol: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8002)
+    uvicorn.run(app, host="10.1.1.110", port=8002)

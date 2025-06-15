@@ -14,7 +14,7 @@ def show_api_features():
     print("=" * 50)
     
     try:
-        response = requests.get('http://localhost:8003/', timeout=5)
+        response = requests.get('http://10.1.1.110:8003/', timeout=5)
         if response.status_code == 200:
             data = response.json()
             print(f"📊 Version: {data.get('version', 'unknown')}")
@@ -38,7 +38,7 @@ def show_live_monitoring_positions():
     print("=" * 50)
     
     try:
-        response = requests.get('http://localhost:8003/api/dashboard/live-monitoring-positions', timeout=5)
+        response = requests.get('http://10.1.1.110:8003/api/dashboard/live-monitoring-positions', timeout=5)
         if response.status_code == 200:
             data = response.json()
             positions = data.get('live_monitoring_positionen', [])
@@ -64,7 +64,7 @@ def show_growth_predictions():
     print("=" * 50)
     
     try:
-        response = requests.get('http://localhost:8003/api/wachstumsprognose/top10', timeout=10)
+        response = requests.get('http://10.1.1.110:8003/api/wachstumsprognose/top10', timeout=10)
         if response.status_code == 200:
             data = response.json()
             stocks = data.get('top_10_wachstums_aktien', [])
@@ -91,7 +91,7 @@ def demonstrate_workflow():
     print("\n🎯 Workflow Demonstration")
     print("=" * 50)
     
-    print("1. 📊 Benutzer öffnet Dashboard: http://localhost:8054")
+    print("1. 📊 Benutzer öffnet Dashboard: http://10.1.1.110:8054")
     print("2. 🤖 Wachstumsprognosen werden angezeigt (TOP 10)")
     print("3. 🎯 Benutzer klickt 'Zu Live-Monitoring' bei einer Aktie")
     print("4. 🔢 Position-Auswahl Dialog öffnet sich (1-10)")
@@ -123,7 +123,7 @@ def test_adding_stock():
         
         print("📤 Sending request to add AAPL to position 1...")
         response = requests.post(
-            'http://localhost:8003/api/dashboard/add-to-live-monitoring', 
+            'http://10.1.1.110:8003/api/dashboard/add-to-live-monitoring', 
             params=params, 
             timeout=10
         )
@@ -147,12 +147,12 @@ def show_dashboard_status():
     print("\n🖥️  Dashboard Status")
     print("=" * 50)
     
-    print("🌐 Dashboard URL: http://localhost:8054")
-    print("🔧 API Server URL: http://localhost:8003")
+    print("🌐 Dashboard URL: http://10.1.1.110:8054")
+    print("🔧 API Server URL: http://10.1.1.110:8003")
     
     # Test if dashboard is accessible
     try:
-        response = requests.get('http://localhost:8054/', timeout=5)
+        response = requests.get('http://10.1.1.110:8054/', timeout=5)
         if response.status_code == 200:
             print("✅ Dashboard is running and accessible")
         else:
@@ -181,7 +181,7 @@ def main():
     print("✅ Wachstumsprognosen sind verfügbar")
     print("✅ Dashboard läuft und sollte neue Features zeigen")
     print("\n🎯 Nächste Schritte:")
-    print("1. Öffnen Sie http://localhost:8054 im Browser")
+    print("1. Öffnen Sie http://10.1.1.110:8054 im Browser")
     print("2. Schauen Sie sich die 'Detaillierte Wachstumsprognose' an")
     print("3. Klicken Sie auf '📊 Zu Live-Monitoring' bei einer Aktie")
     print("4. Wählen Sie eine Position (1-10) aus")

@@ -19,7 +19,7 @@ def no_cache(response):
     return response
 
 # API Konfiguration
-API_URL = "http://localhost:8003"
+API_URL = "http://10.1.1.110:8003"
 
 def get_growth_data():
     """Hole Wachstumsdaten von API"""
@@ -255,4 +255,4 @@ if __name__ == '__main__':
     print("📊 URL: http://10.1.1.110:8054")
     print("🎯 Buttons sind GARANTIERT sichtbar und funktionsfähig!")
     # Explizit auf allen Interfaces binden um .110 zu erreichen
-    app.run(debug=False, host='0.0.0.0', port=8054, threaded=True)
+    app.run(debug=False, host='10.1.1.110', port=8055, threaded=True)

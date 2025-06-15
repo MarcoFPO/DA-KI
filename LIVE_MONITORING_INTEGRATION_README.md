@@ -75,7 +75,7 @@ CREATE TABLE dashboard_live_monitoring (
 
 1. **🚀 Dashboard öffnen**
    ```
-   http://localhost:8054
+   http://10.1.1.110:8054
    ```
 
 2. **📊 Wachstumsprognose anzeigen**
@@ -162,13 +162,13 @@ python3 scripts/init_historical_monitoring.py
 ### **2. API Server starten**
 ```bash
 python3 api/api_top10_final.py
-# Läuft auf: http://localhost:8003
+# Läuft auf: http://10.1.1.110:8003
 ```
 
 ### **3. Dashboard starten**
 ```bash
 python3 frontend/dashboard_top10.py
-# Läuft auf: http://localhost:8054
+# Läuft auf: http://10.1.1.110:8054
 ```
 
 ### **4. Integration testen**
