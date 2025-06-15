@@ -438,9 +438,11 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
         
         return status, empty_card, {'data': [], 'layout': {'title': 'Keine Daten'}}, {'data': [], 'layout': {'title': 'Keine Daten'}}, html.P("Keine Daten verfügbar")
     
-    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen - 5x2 Anordnung
-    karten = []
-    for i, aktie in enumerate(top_10[:10], 1):
+    # Erweiterte Wachstums-Karten mit Steckbriefen erstellen - echte 5x2 Anordnung
+    
+    # Erste Reihe (Karten 1-5)
+    erste_reihe = []
+    for i, aktie in enumerate(top_10[:5], 1):
         prognose = aktie.get('prognose_30_tage', {})
         
         karte = html.Div([
@@ -448,7 +450,7 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
             html.H4(f"{aktie.get('symbol', 'N/A')}", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': 10}),
             html.P(f"{aktie.get('name', 'N/A')[:30]}...", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#7f8c8d'}),
             
-            # Steckbrief-Informationen mit WKN (aus Memory)
+            # Steckbrief-Informationen mit WKN
             html.Div([
                 html.P([html.Strong("🏢 "), aktie.get('branche', 'N/A')], style={'fontSize': '11px', 'margin': '5px 0'}),
                 html.P([html.Strong("📍 "), aktie.get('hauptsitz', 'N/A')[:25]], style={'fontSize': '10px', 'color': '#7f8c8d', 'margin': '5px 0'}),
@@ -465,11 +467,42 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
             'boxShadow': '0 4px 8px rgba(0,0,0,0.1)', 'border': '1px solid #ecf0f1',
             'position': 'relative', 'minHeight': '300px', 'verticalAlign': 'top'
         })
-        karten.append(karte)
+        erste_reihe.append(karte)
+    
+    # Zweite Reihe (Karten 6-10)
+    zweite_reihe = []
+    for i, aktie in enumerate(top_10[5:10], 6):
+        prognose = aktie.get('prognose_30_tage', {})
         
-        # Nach jeder 5. Karte einen Zeilenumbruch einfügen
-        if i == 5:
-            karten.append(html.Div(style={'width': '100%', 'height': '0px'}))
+        karte = html.Div([
+            html.H4(f"#{i}", style={'position': 'absolute', 'top': '5px', 'left': '5px', 'color': '#e74c3c', 'fontWeight': 'bold'}),
+            html.H4(f"{aktie.get('symbol', 'N/A')}", style={'textAlign': 'center', 'color': '#2c3e50', 'marginBottom': 10}),
+            html.P(f"{aktie.get('name', 'N/A')[:30]}...", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#7f8c8d'}),
+            
+            # Steckbrief-Informationen mit WKN
+            html.Div([
+                html.P([html.Strong("🏢 "), aktie.get('branche', 'N/A')], style={'fontSize': '11px', 'margin': '5px 0'}),
+                html.P([html.Strong("📍 "), aktie.get('hauptsitz', 'N/A')[:25]], style={'fontSize': '10px', 'color': '#7f8c8d', 'margin': '5px 0'}),
+                html.P([html.Strong("🏷️ WKN: "), aktie.get('wkn', 'N/A')], style={'fontSize': '10px', 'color': '#7f8c8d', 'margin': '5px 0'})
+            ], style={'textAlign': 'left', 'marginBottom': 10}),
+            
+            html.H3(f"€{aktie.get('current_price', 0)}", style={'textAlign': 'center', 'color': '#27ae60', 'marginBottom': 5}),
+            html.P(f"KI-Score: {aktie.get('wachstums_score', 0)}/100", style={'textAlign': 'center', 'fontWeight': 'bold', 'color': '#e74c3c'}),
+            html.P(f"30T-Prognose: €{prognose.get('prognostizierter_preis', 0):.2f}", style={'textAlign': 'center', 'fontSize': '12px'}),
+            html.P(f"Rendite: +{prognose.get('erwartete_rendite_prozent', 0):.1f}%", style={'textAlign': 'center', 'fontSize': '12px', 'color': '#27ae60'})
+        ], style={
+            'width': '19%', 'display': 'inline-block', 'margin': '5px 0.5%', 
+            'padding': '15px', 'backgroundColor': 'white', 'borderRadius': '10px',
+            'boxShadow': '0 4px 8px rgba(0,0,0,0.1)', 'border': '1px solid #ecf0f1',
+            'position': 'relative', 'minHeight': '300px', 'verticalAlign': 'top'
+        })
+        zweite_reihe.append(karte)
+    
+    # Container für 5x2 Layout
+    karten = [
+        html.Div(erste_reihe, style={'width': '100%', 'marginBottom': '10px'}),
+        html.Div(zweite_reihe, style={'width': '100%'})
+    ]
     
     # Ranking Chart
     ranking_data = [aktie.get('wachstums_score', 0) for aktie in top_10]
