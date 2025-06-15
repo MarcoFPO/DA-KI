@@ -498,11 +498,17 @@ def update_wachstumsprognose_mit_steckbriefen(n_intervals, refresh_clicks):
         })
         rechte_spalte.append(karte)
     
-    # Container für 5x2 Layout (5 Zeilen, 2 Spalten)
+    # Container für 5x2 Layout (5 Zeilen, 2 Spalten) - CSS Grid für robustes Layout
     karten = html.Div([
-        html.Div(linke_spalte, style={'width': '48%', 'display': 'inline-block', 'verticalAlign': 'top', 'marginRight': '2%'}),
-        html.Div(rechte_spalte, style={'width': '48%', 'display': 'inline-block', 'verticalAlign': 'top', 'marginLeft': '2%'})
-    ], style={'width': '100%'})
+        html.Div(linke_spalte, style={'gridColumn': '1'}),
+        html.Div(rechte_spalte, style={'gridColumn': '2'})
+    ], style={
+        'display': 'grid',
+        'gridTemplateColumns': '1fr 1fr',  # 2 gleiche Spalten
+        'gap': '20px',
+        'width': '100%',
+        'alignItems': 'start'  # Verhindert Höhen-Probleme
+    })
     
     # Ranking Chart
     ranking_data = [aktie.get('wachstums_score', 0) for aktie in top_10]
