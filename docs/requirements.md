@@ -27,6 +27,8 @@ Wie das System funktionieren soll.
 
 ### 3.2. Sicherheit und umgebungsspezifische Behandlung von Geheimnissen
 
+**Wichtiger Hinweis zur Sicherheit:** Da das DA-KI-System ausschließlich in einem privaten Netzwerk betrieben wird und **nicht aus dem Internet erreichbar ist**, werden die Sicherheitsanforderungen entsprechend der Bedrohungslage angepasst. Die folgenden Sicherheitsmaßnahmen sind primär für eine eventuelle spätere Internetexposition vorgesehen.
+
 Um die Sicherheit der Benutzerdaten zu gewährleisten und gleichzeitig eine effiziente Entwicklung zu ermöglichen, werden die Anforderungen je nach Betriebsumgebung (Produktion vs. Entwicklung) unterschieden.
 
 **1. Benutzerauthentifizierung**
