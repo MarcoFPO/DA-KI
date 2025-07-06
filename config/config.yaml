@@ -84,3 +84,45 @@ monitoring:
   health_check_interval: 300
   performance_monitoring: true
   error_threshold: 10
+
+# Compliance & Risiko-Management Konfiguration
+compliance:
+  private_trading_limits:
+    max_daily_trades: 5
+    max_single_position: 200.00
+    max_total_investment: 1000.00
+    max_trading_frequency: "daily"
+    automatic_stop_loss_percentage: 5.0
+    
+  legal_framework:
+    trading_purpose: "private_investment"
+    system_type: "experimental_tool"
+    user_status: "private_individual" 
+    regulatory_status: "non_professional"
+    
+  risk_management:
+    manual_override_available: true
+    mandatory_review_interval: "daily"
+    emergency_stop_enabled: true
+    loss_notification_threshold: 100.00
+    max_loss_per_day: 50.00
+    max_loss_per_trade: 10.00
+    cool_down_after_losses: "24_hours"
+
+# Broker-spezifische Limits (externe Vorgaben)
+broker_limits:
+  bitpanda:
+    rate_limit_per_minute: 100
+    min_order_size: 25.00
+    max_order_size: 1000.00
+    trading_hours: "09:00-17:30"
+    connection_timeout: 30
+    max_retries: 3
+    
+audit_trail:
+  logging_enabled: true
+  log_trading_decisions: true
+  log_ml_decisions: true
+  log_system_events: true
+  structured_logging: true
+  retention_days: 365
