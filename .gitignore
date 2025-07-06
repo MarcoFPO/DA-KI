@@ -72,6 +72,17 @@ dmypy.json
 # DA-KI specific
 # Development secrets (NEVER commit to version control)
 config/dev_secrets.json
+config/secrets.env
+
+# SSL Certificates
+certs/
+*.crt
+*.key
+*.pem
+
+# Runtime files
+backups/
+*.lock
 
 # Database files
 data/*.db

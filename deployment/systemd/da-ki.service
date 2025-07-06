@@ -1,0 +1,21 @@
+[Unit]
+Description=DA-KI Aktienportfolio Management System
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=da-ki
+Group=da-ki
+WorkingDirectory=/opt/da-ki/app
+Environment=PYTHONPATH=/opt/da-ki/app
+Environment=LANG=de_DE.UTF-8
+Environment=LC_ALL=de_DE.UTF-8
+ExecStart=/opt/da-ki/app/venv/bin/python main.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

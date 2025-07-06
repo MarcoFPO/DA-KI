@@ -1,0 +1,15 @@
+[Unit]
+Description=DA-KI HTTP zu HTTPS Weiterleitung
+After=network.target
+
+[Service]
+Type=simple
+User=da-ki
+Group=da-ki
+WorkingDirectory=/opt/da-ki/app
+ExecStart=/opt/da-ki/app/venv/bin/python redirect.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,86 @@
+# DA-KI Haupt-Konfigurationsdatei
+
+system:
+  name: "DA-KI Stock Portfolio Management"
+  version: "1.0.0"
+  environment: "production"
+  locale: "de_DE.UTF-8"
+  timezone: "Europe/Berlin"
+
+server:
+  host: "10.1.1.180"
+  port: 443
+  ssl_cert: "/opt/da-ki/certs/server.crt"
+  ssl_key: "/opt/da-ki/certs/server.key"
+  redirect_port: 80
+  workers: 1
+  max_connections: 100
+
+database:
+  type: "sqlite"
+  path: "/opt/da-ki/data/database.db"
+  backup_enabled: true
+  backup_interval: "daily"
+  connection_pool_size: 5
+
+logging:
+  level: "INFO"
+  app_log: "/opt/da-ki/logs/app.log"
+  access_log: "/opt/da-ki/logs/access.log"
+  trading_log: "/opt/da-ki/logs/trading.log"
+  error_log: "/opt/da-ki/logs/error.log"
+  max_size: "100MB"
+  retention_days: 30
+
+network:
+  ip_address: "10.1.1.180"
+  subnet: "10.1.1.0/24"
+  gateway: "10.1.1.254"
+  dns: "10.1.1.254"
+  timeout: 30
+  retries: 3
+
+security:
+  jwt_secret_key: "CHANGE_THIS_IN_PRODUCTION"
+  jwt_algorithm: "HS256"
+  jwt_expiry_hours: 24
+  password_hash_rounds: 12
+  max_login_attempts: 5
+  lockout_duration_minutes: 15
+
+trading:
+  max_position_size: 200.0
+  max_total_investment: 1000.0
+  stop_loss_percentage: 5.0
+  max_daily_trades: 5
+  trading_hours:
+    start: "09:00"
+    end: "17:30"
+    timezone: "Europe/Berlin"
+  
+portfolio:
+  max_stocks: 10
+  rebalance_frequency: "daily"
+  analysis_lookback_days: 90
+  min_confidence_score: 0.7
+
+data_sources:
+  update_frequency: "daily"
+  update_time: "06:00"
+  retry_failed_updates: true
+  cache_enabled: true
+  cache_duration_hours: 6
+
+alerts:
+  email_enabled: false
+  email_smtp_server: ""
+  email_port: 587
+  email_username: ""
+  email_password: ""
+  email_to: ""
+  
+monitoring:
+  health_check_enabled: true
+  health_check_interval: 300
+  performance_monitoring: true
+  error_threshold: 10

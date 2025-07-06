@@ -1,0 +1,12 @@
+# DA-KI Cron Jobs
+# Tägliche Datenaktualisierung um 6:00 Uhr
+0 6 * * * da-ki /opt/da-ki/scripts/update_data.sh
+
+# Tägliche Backups um 2:00 Uhr  
+0 2 * * * da-ki /opt/da-ki/scripts/backup.sh
+
+# Wöchentliche System-Bereinigung (Sonntag 1:00 Uhr)
+0 1 * * 0 da-ki /opt/da-ki/scripts/cleanup.sh
+
+# Log-Rotation täglich um 23:00 Uhr
+0 23 * * * da-ki /opt/da-ki/scripts/rotate_logs.sh

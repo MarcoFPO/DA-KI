@@ -1,0 +1,12 @@
+/opt/da-ki/logs/*.log {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    create 644 da-ki da-ki
+    postrotate
+        systemctl reload da-ki.service > /dev/null 2>&1 || true
+    endscript
+}

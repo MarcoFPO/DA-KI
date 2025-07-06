@@ -1,0 +1,51 @@
+{
+  "data_sources": {
+    "yahoo_finance": {
+      "enabled": true,
+      "priority": 1,
+      "config": {
+        "rate_limit_delay": 0.1,
+        "max_retries": 3,
+        "timeout": 30,
+        "enable_news": true,
+        "enable_options": false,
+        "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
+      }
+    },
+    "alpha_vantage": {
+      "enabled": false,
+      "priority": 2,
+      "config": {
+        "api_key": "",
+        "rate_limit_delay": 12,
+        "max_retries": 3,
+        "timeout": 30
+      }
+    }
+  },
+  
+  "brokers": {
+    "bitpanda": {
+      "enabled": false,
+      "priority": 1,
+      "config": {
+        "api_key": "",
+        "api_secret": "",
+        "sandbox_mode": true,
+        "max_order_size": 200.0
+      }
+    }
+  },
+  
+  "ml_models": {
+    "xgboost_predictor": {
+      "enabled": true,
+      "priority": 1,
+      "config": {
+        "model_path": "/opt/da-ki/data/models/xgboost_model.joblib",
+        "retrain_frequency": "weekly",
+        "feature_importance_threshold": 0.01
+      }
+    }
+  }
+}
