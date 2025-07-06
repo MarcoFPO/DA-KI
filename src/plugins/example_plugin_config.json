@@ -1,0 +1,287 @@
+{
+  "plugin_configurations": {
+    "AlphaVantagePlugin": {
+      "description": "Premium financial data provider with comprehensive market coverage",
+      "website": "https://www.alphavantage.co/",
+      "api_key_url": "https://www.alphavantage.co/support/#api-key",
+      "free_tier": {
+        "rate_limit": "5 calls per minute, 500 calls per day",
+        "features": "Basic OHLCV data, technical indicators"
+      },
+      "premium_features": {
+        "rate_limit": "75 calls per minute, unlimited daily",
+        "features": "Real-time data, extended history, forex, crypto"
+      },
+      "configuration": {
+        "api_key": "YOUR_ALPHA_VANTAGE_API_KEY",
+        "rate_limit_delay": 12.0,
+        "premium_account": false,
+        "max_retries": 3,
+        "timeout": 30
+      },
+      "supported_data_types": [
+        "ohlcv (daily, weekly, monthly, intraday)",
+        "technical_indicators (SMA, EMA, RSI, MACD, etc.)",
+        "fundamental_data (earnings, company overview)",
+        "forex_data",
+        "crypto_data"
+      ]
+    },
+    
+    "YahooFinancePlugin": {
+      "description": "Free financial data provider using unofficial Yahoo Finance APIs",
+      "website": "https://finance.yahoo.com/",
+      "api_key_required": false,
+      "free_tier": {
+        "rate_limit": "High rate limits (unofficial)",
+        "features": "OHLCV data, news, dividends, splits"
+      },
+      "limitations": [
+        "Unofficial API may change without notice",
+        "No guaranteed uptime",
+        "Limited historical data depth"
+      ],
+      "configuration": {
+        "rate_limit_delay": 0.1,
+        "max_retries": 3,
+        "timeout": 30,
+        "enable_news": true,
+        "enable_options": false,
+        "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+      },
+      "supported_data_types": [
+        "ohlcv (multiple intervals from 1m to 1mo)",
+        "news_events",
+        "dividend_events",
+        "split_events"
+      ]
+    },
+    
+    "FREDPlugin": {
+      "description": "Federal Reserve Economic Data - macroeconomic indicators",
+      "website": "https://fred.stlouisfed.org/",
+      "api_key_url": "https://research.stlouisfed.org/useraccount/apikey",
+      "free_tier": {
+        "rate_limit": "120 calls per minute",
+        "features": "Complete access to all FRED data"
+      },
+      "configuration": {
+        "api_key": "YOUR_FRED_API_KEY",
+        "rate_limit_delay": 0.5,
+        "max_retries": 3,
+        "timeout": 30,
+        "default_frequency": "d"
+      },
+      "supported_data_types": [
+        "economic_indicators (GDP, unemployment, inflation)",
+        "interest_rates (Fed funds, Treasury yields)",
+        "market_indicators (VIX, yield curves)",
+        "money_supply (M1, M2)",
+        "commodity_prices (oil, gold, copper)"
+      ],
+      "popular_series": {
+        "federal_funds_rate": "FEDFUNDS",
+        "10_year_treasury": "GS10",
+        "unemployment_rate": "UNRATE",
+        "inflation_rate": "CPIAUCSL",
+        "gdp": "GDP",
+        "vix": "VIXCLS"
+      }
+    },
+    
+    "FinancialModelingPrepPlugin": {
+      "description": "Premium financial data provider with comprehensive financial statements",
+      "website": "https://financialmodelingprep.com/",
+      "api_key_url": "https://financialmodelingprep.com/developer/docs",
+      "free_tier": {
+        "rate_limit": "250 calls per day",
+        "features": "Basic financial data"
+      },
+      "premium_features": {
+        "rate_limit": "300+ calls per minute",
+        "features": "Real-time data, full financial statements, analyst estimates"
+      },
+      "configuration": {
+        "api_key": "YOUR_FMP_API_KEY",
+        "rate_limit_delay": 0.2,
+        "max_retries": 3,
+        "timeout": 30,
+        "enable_premium_features": false
+      },
+      "supported_data_types": [
+        "ohlcv (daily historical data)",
+        "financial_statements (income, balance sheet, cash flow)",
+        "financial_ratios",
+        "key_metrics",
+        "analyst_estimates",
+        "earnings_calendar",
+        "upgrades_downgrades",
+        "insider_trading"
+      ]
+    },
+    
+    "RedditSentimentPlugin": {
+      "description": "Social media sentiment analysis from Reddit stock discussions",
+      "website": "https://www.reddit.com/dev/api/",
+      "api_key_url": "https://www.reddit.com/prefs/apps",
+      "setup_instructions": [
+        "1. Go to https://www.reddit.com/prefs/apps",
+        "2. Click 'Create App' or 'Create Another App'",
+        "3. Choose 'script' as application type",
+        "4. Note down the client ID (under app name) and secret"
+      ],
+      "free_tier": {
+        "rate_limit": "60 requests per minute",
+        "features": "Full access to public subreddits"
+      },
+      "configuration": {
+        "client_id": "YOUR_REDDIT_CLIENT_ID",
+        "client_secret": "YOUR_REDDIT_CLIENT_SECRET",
+        "user_agent": "DA-KI:v1.0 (by /u/your_username)",
+        "rate_limit_delay": 1.0,
+        "max_retries": 3,
+        "timeout": 30,
+        "target_subreddits": [
+          "stocks",
+          "investing", 
+          "SecurityAnalysis",
+          "ValueInvesting",
+          "StockMarket"
+        ],
+        "min_post_score": 10
+      },
+      "supported_data_types": [
+        "sentiment_analysis (post and comment sentiment)",
+        "mention_volume (ticker mention frequency)",
+        "viral_posts (high engagement posts)",
+        "dd_posts (due diligence posts)"
+      ]
+    },
+    
+    "NewsSentimentPlugin": {
+      "description": "Multi-source news sentiment analysis for financial markets",
+      "data_sources": {
+        "NewsAPI": {
+          "website": "https://newsapi.org/",
+          "api_key_url": "https://newsapi.org/register",
+          "free_tier": "1000 requests per day",
+          "features": "70,000+ news sources, breaking news"
+        },
+        "Finnhub": {
+          "website": "https://finnhub.io/",
+          "api_key_url": "https://finnhub.io/register",
+          "free_tier": "60 calls per minute",
+          "features": "Financial news, company-specific news"
+        },
+        "MarketAux": {
+          "website": "https://www.marketaux.com/",
+          "api_key_url": "https://www.marketaux.com/account/dashboard",
+          "free_tier": "100 requests per day",
+          "features": "Financial news with sentiment scores"
+        }
+      },
+      "configuration": {
+        "newsapi_key": "YOUR_NEWSAPI_KEY",
+        "finnhub_key": "YOUR_FINNHUB_KEY",
+        "marketaux_key": "YOUR_MARKETAUX_KEY",
+        "rate_limit_delay": 0.5,
+        "max_retries": 3,
+        "timeout": 30,
+        "enable_sentiment_analysis": true,
+        "min_relevance_score": 0.5
+      },
+      "supported_data_types": [
+        "news_sentiment (article sentiment analysis)",
+        "breaking_news (high-impact news events)",
+        "company_news (company-specific news)",
+        "market_news (general market news)"
+      ]
+    }
+  },
+  
+  "usage_examples": {
+    "basic_setup": {
+      "description": "Minimale Konfiguration für Tests",
+      "plugins": ["YahooFinancePlugin"],
+      "reason": "Benötigt keine API-Keys, sofort einsatzbereit"
+    },
+    
+    "free_tier_setup": {
+      "description": "Kostenlose APIs für umfassende Datenabdeckung",
+      "plugins": [
+        "YahooFinancePlugin",
+        "FREDPlugin",
+        "RedditSentimentPlugin"
+      ],
+      "apis_needed": [
+        "FRED API Key (kostenlos)",
+        "Reddit App Credentials (kostenlos)"
+      ]
+    },
+    
+    "professional_setup": {
+      "description": "Premium-Setup für professionelle Anwendungen",
+      "plugins": [
+        "AlphaVantagePlugin",
+        "FinancialModelingPrepPlugin",
+        "FREDPlugin",
+        "NewsSentimentPlugin",
+        "RedditSentimentPlugin"
+      ],
+      "apis_needed": [
+        "Alpha Vantage Premium",
+        "Financial Modeling Prep Premium",
+        "NewsAPI, Finnhub, MarketAux",
+        "FRED API Key",
+        "Reddit App Credentials"
+      ]
+    }
+  },
+  
+  "security_notes": {
+    "api_key_storage": [
+      "Speichern Sie API-Keys niemals in Quellcode",
+      "Verwenden Sie Umgebungsvariablen oder sichere Konfigurationsdateien",
+      "Rotieren Sie API-Keys regelmäßig"
+    ],
+    "rate_limiting": [
+      "Beachten Sie die Rate-Limits der einzelnen APIs",
+      "Konfigurieren Sie angemessene Delays zwischen Requests",
+      "Implementieren Sie Retry-Logik mit exponential backoff"
+    ],
+    "data_privacy": [
+      "Beachten Sie die Nutzungsbedingungen der Datenquellen",
+      "Loggen Sie keine sensiblen Daten",
+      "Implementieren Sie Datenaufbewahrungsrichtlinien"
+    ]
+  },
+  
+  "troubleshooting": {
+    "common_issues": {
+      "api_key_errors": {
+        "symptoms": ["401 Unauthorized", "403 Forbidden"],
+        "solutions": [
+          "Überprüfen Sie die API-Key-Konfiguration",
+          "Stellen Sie sicher, dass der API-Key aktiv ist",
+          "Prüfen Sie die API-Key-Berechtigungen"
+        ]
+      },
+      "rate_limit_errors": {
+        "symptoms": ["429 Too Many Requests", "Rate limit exceeded"],
+        "solutions": [
+          "Erhöhen Sie die rate_limit_delay",
+          "Reduzieren Sie die Anzahl paralleler Requests",
+          "Überprüfen Sie Ihr API-Kontingent"
+        ]
+      },
+      "no_data_returned": {
+        "symptoms": ["Leere Datenlisten", "No data found"],
+        "solutions": [
+          "Überprüfen Sie die Ticker-Symbole",
+          "Prüfen Sie die Datumsbereiche",
+          "Testen Sie mit bekannten Symbolen (AAPL, MSFT)"
+        ]
+      }
+    }
+  }
+}
