@@ -248,20 +248,20 @@ Create `config/dev_secrets.json`:
 
 ## 🚀 Deployment
 
-### Docker Deployment
+### Native LXC Deployment (Empfohlen)
 
 ```bash
-# Build image
-docker build -t da-ki:latest .
+# LXC Container wird bei Bedarf angepasst - keine Docker-Virtualisierung
+# Poetry-basierte Installation direkt im LXC Container
 
-# Run container
-docker run -d \
-  --name da-ki \
-  -p 8000:8000 \
-  -e DAKI_ENV=production \
-  -e DAKI_SECRET_KEY=your-secret-key \
-  -v /path/to/data:/app/data \
-  da-ki:latest
+# Setup im LXC Container
+poetry install --only=main
+poetry run python -m src.database.db_setup
+poetry run systemd-setup
+
+# SystemD Service starten
+systemctl enable da-ki
+systemctl start da-ki
 ```
 
 ### LXC Container Deployment
